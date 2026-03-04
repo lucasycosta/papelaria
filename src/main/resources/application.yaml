@@ -1,0 +1,22 @@
+# DEFINICAO SERVIDOR DE APLICACAO
+server:
+  servlet:
+    context-path: /
+  port: 8080
+
+# DEFINICAO LOG DA APLICACAO
+spring:
+  application:
+    name: papelaria
+
+  # DEFINICAO BANCO DE DADOS
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/papelaria
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
