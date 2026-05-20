@@ -3,6 +3,7 @@ package com.cemi.papelaria.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cemi.papelaria.domain.Cliente;
+import com.cemi.papelaria.dto.request.ClienteRequest;
+import com.cemi.papelaria.dto.response.ClienteResponse;
 import com.cemi.papelaria.service.ClienteService;
 
 import jakarta.validation.Valid;
@@ -26,27 +29,27 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@PostMapping
-	public ResponseEntity<Cliente> adicionar(@Valid @RequestBody Cliente cliente) {
-		Cliente obj = clienteService.adicionar(cliente);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<ClienteResponse> adicionar(@Valid @RequestBody ClienteRequest cliente) {
+		ClienteResponse obj = clienteService.adicionar(cliente);
+		return ResponseEntity.status(HttpStatus.CREATED).body(obj);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-		Cliente obj = clienteService.buscarPorId(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<ClienteResponse> buscarPorId(@PathVariable Long id) {
+		ClienteResponse obj = clienteService.buscarPorId(id);
+		return ResponseEntity.ok(obj);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Cliente>> buscarTodos() {
-		List<Cliente> list = clienteService.buscarTodos();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<ClienteResponse>> buscarTodos() {
+		List<ClienteResponse> list = clienteService.buscarTodos();
+		return ResponseEntity.ok(list);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> alterar(@PathVariable Long id, @Valid @RequestBody Cliente objNovo) {
-		Cliente obj = clienteService.alterar(id, objNovo);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<ClienteResponse> alterar(@PathVariable Long id, @Valid @RequestBody ClienteRequest objNovo) {
+		ClienteResponse obj = clienteService.alterar(id, objNovo);
+		return ResponseEntity.ok(obj);
 	}
 
 	@DeleteMapping("/{id}")

@@ -1,7 +1,6 @@
 package com.cemi.papelaria.domain;
 
 import java.io.Serializable;
-
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,5 +69,6 @@ public class Fornecedor implements Serializable{
 	@OneToMany(mappedBy = "fornecedor")
 	@JsonIgnore
 	private List<Produto> produtos;
+
 
 }
