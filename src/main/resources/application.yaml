@@ -17,6 +17,6 @@ spring:
     open-in-view: false
   datasource:
     url: jdbc:postgresql://localhost:5432/papelaria
-    username: postgres
-    password: 123456
+    username: admin
+    password: postgres
     driver-class-name: org.postgresql.Driver

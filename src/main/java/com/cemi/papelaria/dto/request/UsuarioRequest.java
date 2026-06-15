@@ -1,7 +1,5 @@
 package com.cemi.papelaria.dto.request;
 
-import com.cemi.papelaria.domain.enums.AcessoUsuario;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class ClienteRequest {
+public class UsuarioRequest {
 	
 	@NotBlank(message="Nome é obrigatório")
 	@Size(min=3)
@@ -23,16 +21,12 @@ public class ClienteRequest {
 		    )
 	private String nome;
 	
-	@NotBlank(message="CPF é obrigatório")
-	@Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
-	private String cpf;
-	
-	@NotBlank(message="Telefone é obrigatório")
-	private String telefone;
-	
 	@NotBlank(message="E-mail é obrigatório")
 	@Email
 	private String email;
-
+	
+	@NotBlank(message="E-mail é obrigatório")
+	private String senha;
+	
 
 }

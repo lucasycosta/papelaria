@@ -1,9 +1,11 @@
 package com.cemi.papelaria.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.cemi.papelaria.domain.enums.FormaPagamento;
 
@@ -39,11 +41,12 @@ public class Venda implements Serializable{
 	@SequenceGenerator(allocationSize = 1, name = "seq_aux_venda", sequenceName = "seq_aux_venda")
 	private Long idVenda;
 	
-	@Column(name="data_venda")
-	private Date dataVenda;
+	@CreationTimestamp
+	@Column(name="data_venda", updatable = false)
+	private LocalDate dataVenda;
 	
-	@Column(name="total_venda")
-	private Double totalVenda;
+	@Column(name="valor_total")
+	private Double valorTotal;
 	
 	@Column(name="forma_pagamento")
 	@Enumerated(EnumType.STRING)

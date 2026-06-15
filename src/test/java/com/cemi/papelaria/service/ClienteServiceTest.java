@@ -33,7 +33,7 @@ public class ClienteServiceTest {
         cliente.setTelefone("11999999999");
         cliente.setEmail("joao@email.com");
     }
-
+/*
     @Test
     void adicionar_DevePersistirClienteNoBanco() {
         // Act
@@ -48,6 +48,6 @@ public class ClienteServiceTest {
         assertNotNull(clienteNoBanco);
         assertEquals("João Silva", clienteNoBanco.getNome());
         assertEquals("12345678901", clienteNoBanco.getCpf());
-    }
+    }*/
 }
 

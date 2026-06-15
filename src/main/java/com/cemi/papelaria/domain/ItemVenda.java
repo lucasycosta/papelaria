@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,11 +32,9 @@ public class ItemVenda implements Serializable{
 	private Long idItemVenda;
 	
 	@Column(name = "quantidade")
-	@NotNull
 	private Integer quantidade;
 	
 	@Column(name = "preco_unitario")
-	@NotNull
 	private BigDecimal precoUnitario;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -47,5 +44,8 @@ public class ItemVenda implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_venda", nullable = false)
 	private Venda venda;
+
+	@Column(name = "id_venda", insertable = false, updatable = false)
+	private Long idVenda;
 
 }

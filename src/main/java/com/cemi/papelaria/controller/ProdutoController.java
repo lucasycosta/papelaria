@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cemi.papelaria.domain.Produto;
+import com.cemi.papelaria.dto.request.ProdutoRequest;
+import com.cemi.papelaria.dto.response.ProdutoResponse;
 import com.cemi.papelaria.service.ProdutoService;
 
 import jakarta.validation.Valid;
@@ -26,26 +27,26 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 
 	@PostMapping
-	public ResponseEntity<Produto> adicionar(@Valid @RequestBody Produto produto) {
-		Produto obj = produtoService.adicionar(produto);
+	public ResponseEntity<ProdutoResponse> adicionar(@Valid @RequestBody ProdutoRequest produto) {
+		ProdutoResponse obj = produtoService.adicionar(produto);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
-		Produto obj = produtoService.buscarPorId(id);
+	public ResponseEntity<ProdutoResponse> buscarPorId(@PathVariable Long id) {
+		ProdutoResponse obj = produtoService.buscarPorId(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Produto>> buscarTodos() {
-		List<Produto> list = produtoService.buscarTodos();
+	public ResponseEntity<List<ProdutoResponse>> buscarTodos() {
+		List<ProdutoResponse> list = produtoService.buscarTodos();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> alterar(@PathVariable Long id, @Valid @RequestBody Produto objNovo) {
-		Produto obj = produtoService.alterar(id, objNovo);
+	public ResponseEntity<ProdutoResponse> alterar(@PathVariable Long id, @Valid @RequestBody ProdutoRequest objNovo) {
+		ProdutoResponse obj = produtoService.alterar(id, objNovo);
 		return ResponseEntity.ok().body(obj);
 	}
 

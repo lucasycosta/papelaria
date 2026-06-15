@@ -1,13 +1,22 @@
 package com.cemi.papelaria.service;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cemi.papelaria.domain.ItemVenda;
+import com.cemi.papelaria.domain.Produto;
+import com.cemi.papelaria.domain.Venda;
+import com.cemi.papelaria.dto.request.ItemVendaRequest;
+import com.cemi.papelaria.dto.response.ItemVendaResponse;
 import com.cemi.papelaria.repository.ItemVendaRepository;
+import com.cemi.papelaria.repository.ProdutoRepository;
+import com.cemi.papelaria.repository.VendaRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ItemVendaService {
@@ -15,56 +24,50 @@ public class ItemVendaService {
 	@Autowired
 	private ItemVendaRepository itemVendaRepository;
 
-	/**
-	 * Adiciona um novo item à venda.
-	 */
-	public ItemVenda adicionar(ItemVenda itemVenda) {
-		return itemVendaRepository.save(itemVenda);
-	}
+	@Autowired
+	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private VendaRepository vendaRepository;
 
 	/**
 	 * Busca um item pelo ID.
 	 */
-	public ItemVenda buscarPorId(Long id) {
-		Optional<ItemVenda> obj = itemVendaRepository.findById(id);
-		return obj.orElseThrow(() -> new RuntimeException("Item de venda não encontrado! Id: " + id));
+	public ItemVendaResponse buscarPorId(Long id) {
+		ItemVenda item = findEntityById(id);
+		return toResponse(item);
 	}
 
 	/**
 	 * Busca todos os itens de venda.
 	 */
-	public List<ItemVenda> buscarTodos() {
-		return itemVendaRepository.findAll();
-	}
-
-	/**
-	 * Altera os dados de um item existente.
-	 */
-	public ItemVenda alterar(Long id, ItemVenda objNovo) {
-		ItemVenda objAntigo = buscarPorId(id);
-		atualizarDados(objAntigo, objNovo);
-		return itemVendaRepository.save(objAntigo);
+	public List<ItemVendaResponse> buscarTodos() {
+		return itemVendaRepository.findAll().stream()
+				.map(this::toResponse)
+				.collect(Collectors.toList());
 	}
 
 	/**
 	 * Exclui um item pelo ID.
 	 */
 	public void excluir(Long id) {
-		buscarPorId(id); // Verifica se existe
+		findEntityById(id); // Verifica se existe
 		itemVendaRepository.deleteById(id);
 	}
 
-	/**
-	 * Método auxiliar para atualizar os campos do objeto antigo com os novos dados.
-	 * Por ser uma entidade associativa, a atualização de Produto ou Venda deve ser feita com cautela.
-	 */
-	private void atualizarDados(ItemVenda objAntigo, ItemVenda objNovo) {
-		objAntigo.setQuantidade(objNovo.getQuantidade());
-		objAntigo.setPrecoUnitario(objNovo.getPrecoUnitario());
-		
-		// Em entidades associativas, geralmente permitimos trocar o Produto ou a Venda 
-		// associada se o contexto do negócio permitir a correção do item.
-		objAntigo.setProduto(objNovo.getProduto());
-		objAntigo.setVenda(objNovo.getVenda());
+	private ItemVendaResponse toResponse(ItemVenda item) {
+		ItemVendaResponse response = new ItemVendaResponse();
+		response.setIdItemVenda(item.getIdItemVenda());
+		response.setQuantidade(item.getQuantidade());
+		response.setPrecoUnitario(item.getPrecoUnitario());
+		response.setIdProduto(item.getProduto().getIdProduto());
+		response.setNomeProduto(item.getProduto().getNomeProduto());
+		response.setIdVenda(item.getVenda().getIdVenda());
+		return response;
+	}
+
+	private ItemVenda findEntityById(Long id) {
+		return itemVendaRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Item de venda não encontrado! Id: " + id));
 	}
 }

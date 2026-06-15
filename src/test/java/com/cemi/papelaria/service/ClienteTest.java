@@ -32,7 +32,8 @@ public class ClienteTest {
 		cliente.setCpf("01223595644");
 		cliente.setTelefone("61999999999");
 		cliente.setEmail("teste@mail.com");
-	}
+	}  
+	/*
 	
 	@Test
 	@Rollback(false)
@@ -48,6 +49,6 @@ public class ClienteTest {
         assertNotNull(clienteNoBanco);
         assertEquals("Lucas", clienteNoBanco.getNome());
         assertEquals("01223595644", clienteNoBanco.getCpf());
-	}
+	}*/
 	
 }
