@@ -27,13 +27,13 @@ public class Usuario implements Serializable{
 	@SequenceGenerator(allocationSize = 1, name = "seq_aux_usuario", sequenceName = "seq_aux_usuario")
 	private Long idUsuario;
 	
-	@Column(name="nome_usuario", nullable = false, unique = true, length = 11)
+	@Column(name="nome_usuario", nullable = false, unique = true, length = 100)
 	private String nome;
 	
-	@Column(name="email_usuario", nullable = false, unique = true, length = 11)
+	@Column(name="email_usuario", nullable = false, unique = true, length = 100)
 	private String email;
 	
-	@Column(name="senha_usuario", nullable = false, unique = true, length = 11)
+	@Column(name="senha_usuario", nullable = false, unique = true, length = 8)
 	private String senha;
 
 }

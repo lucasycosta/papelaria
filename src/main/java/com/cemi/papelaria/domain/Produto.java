@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.cemi.papelaria.domain.enums.CategoriaProduto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -42,7 +41,8 @@ public class Produto implements Serializable{
 	@Column(name="descricao_produto")
 	private String descricao;
 	
-	@Column(name="categoria_produto")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_categoria_produto", nullable = false)
 	private CategoriaProduto categoria;
 	
 	@Column(name="preco_produto")

@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cemi.papelaria.domain.CategoriaProduto;
 import com.cemi.papelaria.domain.Produto;
 import com.cemi.papelaria.dto.request.ProdutoRequest;
 import com.cemi.papelaria.dto.response.ProdutoResponse;
+import com.cemi.papelaria.repository.CategoriaProdutoRepository;
 import com.cemi.papelaria.repository.ProdutoRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +20,9 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private CategoriaProdutoRepository categoriaProdutoRepository;
 
 	/**
 	 * Adiciona um novo produto.
@@ -69,7 +74,11 @@ public class ProdutoService {
 	private void atualizarDados(Produto objAntigo, ProdutoRequest request) {
 		objAntigo.setNomeProduto(request.getNomeProduto());
 		objAntigo.setDescricao(request.getDescricao());
-		objAntigo.setCategoria(request.getCategoria());
+		
+		CategoriaProduto categoria = categoriaProdutoRepository.findById(request.getIdCategoriaProduto())
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada! Id: " + request.getIdCategoriaProduto()));
+		objAntigo.setCategoria(categoria);
+		
 		objAntigo.setPreco(request.getPreco());
 		objAntigo.setEstoque(request.getEstoque());
 		objAntigo.setDataValidade(request.getDataValidade());
@@ -79,7 +88,11 @@ public class ProdutoService {
 		Produto produto = new Produto();
 		produto.setNomeProduto(request.getNomeProduto());
 		produto.setDescricao(request.getDescricao());
-		produto.setCategoria(request.getCategoria());
+		
+		CategoriaProduto categoria = categoriaProdutoRepository.findById(request.getIdCategoriaProduto())
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada! Id: " + request.getIdCategoriaProduto()));
+		produto.setCategoria(categoria);
+		
 		produto.setPreco(request.getPreco());
 		produto.setEstoque(request.getEstoque());
 		produto.setDataValidade(request.getDataValidade());
@@ -92,7 +105,8 @@ public class ProdutoService {
 		response.setIdProduto(produto.getIdProduto());
 		response.setNomeProduto(produto.getNomeProduto());
 		response.setDescricao(produto.getDescricao());
-		response.setCategoria(produto.getCategoria());
+		response.setIdCategoriaProduto(produto.getCategoria().getIdCategoriaProduto());
+		response.setNomeCategoria(produto.getCategoria().getNomeCategoria());
 		response.setPreco(produto.getPreco());
 		response.setEstoque(produto.getEstoque());
 		response.setDataValidade(produto.getDataValidade());

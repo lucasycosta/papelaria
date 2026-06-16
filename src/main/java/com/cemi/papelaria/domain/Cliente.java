@@ -32,7 +32,7 @@ public class Cliente implements Serializable{
 	@SequenceGenerator(allocationSize = 1, name = "seq_aux_cliente", sequenceName = "seq_aux_cliente")
 	private Long idCliente;
 	
-	@Column(name="nome_cliente", nullable = false, unique = true, length = 11)
+	@Column(name="nome_cliente", nullable = false, unique = true, length = 100)
 	private String nome;
 	
 	@Column(name="cpf_cliente")

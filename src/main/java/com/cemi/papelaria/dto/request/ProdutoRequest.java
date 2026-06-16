@@ -2,8 +2,6 @@ package com.cemi.papelaria.dto.request;
 
 import java.time.LocalDate;
 
-import com.cemi.papelaria.domain.enums.CategoriaProduto;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -17,7 +15,7 @@ public class ProdutoRequest {
 	private String descricao;
 
 	@NotNull(message="Categoria é obrigatória")
-	private CategoriaProduto categoria;
+	private Long idCategoriaProduto;
 
 	@NotNull(message="Preço é obrigatório")
 	private Double preco;
