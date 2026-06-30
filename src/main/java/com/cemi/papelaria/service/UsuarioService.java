@@ -7,17 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cemi.papelaria.domain.Usuario;
+import com.cemi.papelaria.dto.request.LoginRequest;
 import com.cemi.papelaria.dto.request.UsuarioRequest;
 import com.cemi.papelaria.dto.response.UsuarioResponse;
 import com.cemi.papelaria.repository.UsuarioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	/**
+	 * Realiza o login do usuário.
+	 */
+	public UsuarioResponse login(LoginRequest request) {
+		Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "E-mail ou senha incorretos!"));
+
+		if (!usuario.getSenha().equals(request.getSenha())) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "E-mail ou senha incorretos!");
+		}
+
+		return toResponse(usuario);
+	}
 
 	/**
 	 * Adiciona um novo usuário.

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cemi.papelaria.dto.request.LoginRequest;
 import com.cemi.papelaria.dto.request.UsuarioRequest;
 import com.cemi.papelaria.dto.response.UsuarioResponse;
 import com.cemi.papelaria.service.UsuarioService;
@@ -26,6 +27,12 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@PostMapping("/login")
+	public ResponseEntity<UsuarioResponse> login(@Valid @RequestBody LoginRequest request) {
+		UsuarioResponse obj = usuarioService.login(request);
+		return ResponseEntity.ok(obj);
+	}
 
 	@PostMapping
 	public ResponseEntity<UsuarioResponse> adicionar(@Valid @RequestBody UsuarioRequest request) {
